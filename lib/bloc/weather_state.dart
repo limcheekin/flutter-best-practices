@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_best_practices/model/weather.dart';
 import 'package:meta/meta.dart';
 
 @immutable

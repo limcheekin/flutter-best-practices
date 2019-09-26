@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/weather_bloc.dart';
+import 'bloc/weather_event.dart';
 import 'bloc/weather_state.dart';
+import 'model/weather.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,28 +21,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class WeatherPage extends StatefulWidget {
-  WeatherPage({Key key}) : super(key: key);
-
-  _WeatherPageState createState() => _WeatherPageState();
-}
-
-class _WeatherPageState extends State<WeatherPage> {
+class WeatherPage extends StatelessWidget {
   // Instantiate the Bloc
   final weatherBloc = WeatherBloc();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Fake Weather App"),
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 16),
-        alignment: Alignment.center,
+        appBar: AppBar(
+          title: Text("Fake Weather App"),
+        ),
+        body: BlocProvider(
+          // This bloc can now be accessed from CityInputField
+          builder: (context) => WeatherBloc(),
+          child: WeatherPageChild(),
+        ));
+  }
+}
+
+// Because we now don't hold a reference to the WeatherBloc directly,
+// we have to get it through the BlocProvider. This is only possible from
+// a widget which is a child of the BlocProvider in the widget tree.
+class WeatherPageChild extends StatelessWidget {
+  const WeatherPageChild({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 16),
+      alignment: Alignment.center,
+      // BlocListener invokes the listener when new state is emitted.
+      child: BlocListener(
+        bloc: BlocProvider.of<WeatherBloc>(context),
+        // Listener is the place for logging, showing Snackbars, navigating, etc.
+        // It is guaranteed to run only once per state change.
+        listener: (BuildContext context, WeatherState state) {
+          if (state is WeatherLoaded) {
+            print("Loaded: ${state.weather.cityName}");
+          }
+        },
         // BlocBuilder invokes the builder when new state is emitted.
         child: BlocBuilder(
-          bloc: weatherBloc,
+          bloc: BlocProvider.of<WeatherBloc>(context),
           // The builder function has to be a "pure function".
           // That is, it only returns a Widget and doesn't do anything else.
           builder: (BuildContext context, WeatherState state) {
@@ -91,13 +115,6 @@ class _WeatherPageState extends State<WeatherPage> {
       ],
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // Don't forget to call dispose on the Bloc to close the Streams!
-    weatherBloc.dispose();
-  }
 }
 
 class CityInputField extends StatefulWidget {
@@ -128,5 +145,9 @@ class _CityInputFieldState extends State<CityInputField> {
 
   void submitCityName(String cityName) {
     // We will use the city name to search for the fake forecast
+    // Get the Bloc using the BlocProvider
+    final weatherBloc = BlocProvider.of<WeatherBloc>(context);
+    // Initiate getting the weather
+    weatherBloc.dispatch(GetWeather(cityName));
   }
 }
