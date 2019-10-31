@@ -20,3 +20,4 @@ samples, guidance on mobile development, and a full API reference.
 Different best practices organized in a branch:
 
 - [Business Logic Component(Bloc) Pattern](https://resocoder.com/2019/06/12/bloc-library-updated-painless-state-management-for-flutter/)
+- [Flutter Architecture - My Provider Implementation Guide](https://www.filledstacks.com/post/flutter-architecture-my-provider-implementation-guide)

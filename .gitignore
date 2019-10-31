@@ -8,6 +8,9 @@
 .buildlog/
 .history
 .svn/
+android/.project
+android/.settings/
+pubspec.lock
 
 # IntelliJ related
 *.iml
