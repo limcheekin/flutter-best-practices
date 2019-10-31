@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/view_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../locator.dart';
@@ -27,7 +28,7 @@ class _LoginViewState extends State<LoginView> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LoginHeader(controller: controller),
+              LoginHeader(controller: controller, validationMessage: model.errorMessage),
               model.state == ViewState.Busy
                   ? CircularProgressIndicator()
                   : FlatButton(
