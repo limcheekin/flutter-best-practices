@@ -40,6 +40,7 @@ class _LoginViewState extends State<LoginView> {
                         var loginSuccess = await model.login(controller.text);
                         if (loginSuccess) {
                           print("loginSuccess");
+                          Navigator.pushNamed(context, '/');
                         }
                       })
             ],
