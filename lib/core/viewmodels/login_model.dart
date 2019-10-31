@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 
 import '../../locator.dart';
 import '../services/authentication_service.dart';
+import '../view_state.dart';
+import 'base_model.dart';
 
-/// Represents the state of the view
-enum ViewState { Idle, Busy }
-
-class LoginModel extends ChangeNotifier {
+class LoginModel extends BaseModel {
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
   ViewState _state = ViewState.Idle;
 
