@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'core/viewmodels/comments_model.dart';
 import 'core/viewmodels/home_model.dart';
 import 'core/viewmodels/login_model.dart';
 import 'core/services/api.dart';
@@ -12,4 +13,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => Api());
 
   locator.registerFactory(() => HomeModel());
+  locator.registerFactory(() => CommentsModel());
 }
