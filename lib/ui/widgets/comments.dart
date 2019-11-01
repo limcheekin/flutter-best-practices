@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_best_practices/core/view_state.dart';
+import 'package:provider/provider.dart';
+import '../../core/view_state.dart';
 import '../../core/viewmodels/comments_model.dart';
 import '../views/base_view.dart';
 import '../../core/models/comment.dart';
@@ -12,6 +13,7 @@ class Comments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<CommentsModel>(
+        model: CommentsModel(api: Provider.of(context)),
         onModelReady: (model) => model.fetchComments(postId),
         builder: (context, model, child) => model.state == ViewState.Busy
             ? Center(child: CircularProgressIndicator())

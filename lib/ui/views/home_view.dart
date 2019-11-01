@@ -15,6 +15,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeModel>(
+        model: HomeModel(api: Provider.of(context)),
         onModelReady: (model) {
           model.getPosts(Provider.of<User>(context).id);
         },

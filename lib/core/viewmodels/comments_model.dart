@@ -1,13 +1,13 @@
+import 'package:flutter/foundation.dart';
 import '../../core/models/comment.dart';
-
 import '../../core/services/api.dart';
-
-import '../../locator.dart';
 import '../view_state.dart';
 import 'base_model.dart';
 
 class CommentsModel extends BaseModel {
-  Api _api = locator<Api>();
+  Api _api;
+
+  CommentsModel({@required Api api}): _api = api;
 
   List<Comment> comments;
 

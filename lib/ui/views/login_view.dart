@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/view_state.dart';
 import '../../core/viewmodels/login_model.dart';
 import '../shared/app_colors.dart';
@@ -18,6 +19,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginModel>(
+      model: LoginModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Scaffold(
         backgroundColor: backgroundColor,
         body: Column(
